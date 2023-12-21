@@ -1,4 +1,37 @@
+// Amazing here I have first time created the two different 
+// server instance in this file one is normal uni-directional
+// express server and second is bi-directional socket server
+// with instance of app and io and listening on 8080 and 8000
+
+
+
+
 const express=require("express");
+const {Server}=require("socket.io");
+// destructuring the bi-directional server for the socket.io 
+const io= new Server(8000,{
+    cors:true,
+}) // instance of server is created
+
+// event listern on the server
+
+const emailToSocketIdMap=new Map();
+const socketidToEmailMap=new Map();
+
+
+
+io.on("connection",socket=>{
+    console.log(`Socket connected ${socket.id}`);
+    socket.on("room:join",(data)=>{
+        const {email,room}=data;
+        emailToSocketIdMap.set(email, socket.id);
+        socketidToEmailMap.set(socket.id,email);
+        socket.to("room:join",data);
+        io.to(socket.id).emit("room:join",data);
+
+    })
+})
+
 
 require("dotenv").config();
 

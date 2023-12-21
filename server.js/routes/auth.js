@@ -1,44 +1,38 @@
-const router=require("express").Router();
-const {User}=require("../models/user");
-const joi=require("joi");
-const bcrypt=require("bcrypt");
+const router = require("express").Router();
+const { User } = require("../models/user");
+const bcrypt = require("bcrypt");
+const Joi = require("joi");
 
+router.post("/", async (req, res) => {
+	try {
+		const { error } = validate(req.body);
+		if (error)
+			return res.status(400).send({ message: error.details[0].message });
 
-router.post("/",async(req,res)=>{
+		const user = await User.findOne({ email: req.body.email });
+		if (!user)
+			return res.status(401).send({ message: "Invalid Email or Password" });
 
-    try{
-      const {error}=validate(req.body);
-      if(error){
-        return res.status(400).send({message:error.details[0].message});
+		const validPassword = await bcrypt.compare(
+			req.body.password,
+			user.password
+		);
+		if (!validPassword)
+			return res.status(401).send({ message: "Invalid Email or Password" });
 
-      }
-      const user=await User.findOne({email:req.body.email});
-      if(!user){
-        return res.status(401).send({message:"Invalid email or password"});
-    }
-    const validPassword= await bcrypt.compare(
-        req.body.password,user.password
-        )
-        if(!validPassword){
-          return res.status(401).send({message:"Invalid email or password"});
-
-      }
-      const token=user.generateAuthtoken();
-      res.status(200).send({data:token,message:"Logged In successfully"});
-    }
-    catch(error){
-        res.status(500).send({message:"Internal server error"});
-
-    }
-
+		const token = user.generateAuthToken();
+		res.status(200).send({ data: token, message: "logged in successfully" });
+	} catch (error) {
+		res.status(500).send({ message: "Internal Server Error" });
+	}
 });
 
-const validate=(data)=>{
-    const schema=joi.object({
-        email:joi.string().email.required().label("Email"),
-        password:joi.string().required().label("Password"),
-    })
+const validate = (data) => {
+	const schema = Joi.object({
+		email: Joi.string().email().required().label("Email"),
+		password: Joi.string().required().label("Password"),
+	});
+	return schema.validate(data);
+};
 
-    schema.validate(data);
-}
 module.exports = router;
