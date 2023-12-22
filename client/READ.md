@@ -1,3 +1,5 @@
+**Log file**
+
 **here is our target to create to pages one is login page and chat room**
 
 1.On login page we have take the infomation of user1 which email and room no and now , we have to take this infomation for states to our backend
@@ -145,8 +147,12 @@ we create the offer and send to the person2
 25. Now, handle the accept call in our backend and send to fe to handle it
 26. As, the call accepted set in our local description and user2 accept the call
 27. Now, call accepted we just have to transimit the stream for one end to other
-
-
+28. For this we are going to make share tracks of one user to other user
+    by peer.peer.addTrack(track,myStream)
+29.Now, we need other useEffect to set new Remote stream and add event listener on track 
+30. After sharing track we need to Other useEffect to deregister the event
+31. negotation will be done here as, it's custom event is send to server
+32. and get handle inside the useEffect in frontend
 
 
 
