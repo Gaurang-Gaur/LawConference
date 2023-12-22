@@ -114,19 +114,23 @@ const RoomPage = () => {
 
   return (
     <div   className={styles.roompage}>
-      <div className={styles.one}>
       <h1>Room Page</h1>
       <h4>{remoteSocketId ? "Connected" : "No one in room"}</h4>
+      <div className={styles.call_buttons}>
       {myStream && <button className={styles.green_btn} onClick={sendStreams}>Send Stream</button>}
       {remoteSocketId && <button className={styles.green_btn} onClick={handleCallUser}>CALL</button>}
+      </div>
+      <div className={styles.streams}>
+      <div className={styles.one}>
       {myStream && (
         <>
           <h1>My Stream</h1>
           <ReactPlayer
+
             playing
             muted
-            height="100px"
-            width="200px"
+            height="200px"
+            width="400px"
             url={myStream}
           />
         </>
@@ -139,13 +143,14 @@ const RoomPage = () => {
           <ReactPlayer
             playing
             muted
-            height="100px"
-            width="200px"
+            height="400px"
+            width="800px"
           
             url={remoteStream}
           />
         </>
       )}
+      </div>
       </div>
     </div>
   );

@@ -131,32 +131,37 @@
 	margin: 10px;
 }
 .roompage{
-	background-color:wheat;
+	color:white;
+	display:flex;
+	flex-direction:column;
+	padding-top:3rem;
+	align-items: center;
+	background-color:rgb(33, 33, 33);
 	height:100vh;
 	
 
 }
 
+.streams{
+	display:flex;
+	margin-top:2rem;
+	align-items: center;
+	justify-content: center;
+	gap: 2rem;
+}
 .one{
 	color:white;
 	display:flex;
+	flex-direction:column;
 	align-items: center;
 	justify-content: center;
 	flex-wrap:nowrap;
-	position:absolute;
-	/* bottom:20px; */
-	
-
 }
 
 .two{
 	color:white;
 	display:flex;
+	flex-direction:column;
 	align-items: center;
-	justify-content: center;
-
-	position:absolute;
-	
-	bottom:20px;
-
+	justify-content: center;	
 }
