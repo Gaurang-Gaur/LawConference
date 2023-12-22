@@ -2,8 +2,12 @@ import styles from "./styles.module.css";
 import "./bootstrap.min.css";
 import {useSocket} from "../../context/SocketProvider";
 import {useState,useCallback,useEffect} from "react";
+import {useNavigate} from "react-router-dom"
+
 
 const Lobby = () => {
+	const navigate=useNavigate();
+
 	const [email,setEmail]=useState("");
 	const [room,setRoom]=useState("");
 	console.log(email);
@@ -20,12 +24,20 @@ const socket=useSocket();
 		socket.emit("room:join",{email,room})
 	},[email,room,socket])
 
+	const handleJoinRoom=useCallback((data)=>{
+		const {email,room}=data;
+		navigate(`/room/${room}`);
+		
+	},[navigate])
+
+
 	useEffect(()=>{
-		socket.on('room:join',(data)=>{
-				console.log(`Data from be: ${data}`);
-		},[socket])
+		socket.on('room:join',handleJoinRoom);
+		return ()=>{
+			socket.off("room:join",handleJoinRoom);
+		}
+
 	})
-	
 
 	return (
 		<div className={styles.main_container}>
