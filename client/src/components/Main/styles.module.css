@@ -130,3 +130,33 @@
 	color: white;
 	margin: 10px;
 }
+.roompage{
+	background-color:wheat;
+	height:100vh;
+	
+
+}
+
+.one{
+	color:white;
+	display:flex;
+	align-items: center;
+	justify-content: center;
+	flex-wrap:nowrap;
+	position:absolute;
+	/* bottom:20px; */
+	
+
+}
+
+.two{
+	color:white;
+	display:flex;
+	align-items: center;
+	justify-content: center;
+
+	position:absolute;
+	
+	bottom:20px;
+
+}
